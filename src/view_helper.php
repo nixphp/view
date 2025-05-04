@@ -6,7 +6,13 @@ use NixPHP\View\Core\Asset;
 use NixPHP\View\Core\View;
 use Psr\Http\Message\ResponseInterface;
 use function NixPHP\app;
+use function NixPHP\guard;
 use function NixPHP\response;
+
+function s(string|array $value): string|array
+{
+    return guard()->safeOutput($value);
+}
 
 function render(string $template, array $vars = []): ResponseInterface
 {
