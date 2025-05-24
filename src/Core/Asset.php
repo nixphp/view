@@ -2,7 +2,7 @@
 
 namespace NixPHP\View\Core;
 
-use function NixPHP\s;
+use function NixPHP\View\s;
 
 class Asset
 {
