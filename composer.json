@@ -1,6 +1,6 @@
 {
   "name": "nixphp/view",
-  "description": "NixPHP View Plugin with simple templating. ",
+  "description": "NixPHP View Plugin with simple templating.",
   "minimum-stability": "stable",
   "license": "MIT",
   "type": "nixphp-plugin",
@@ -23,7 +23,6 @@
   },
   "require": {
     "php": ">=8.3",
-    "ext-pdo": "*",
     "nixphp/framework": "dev-main"
   },
   "require-dev": {

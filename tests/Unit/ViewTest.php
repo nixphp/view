@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use NixPHP\Core\View;
+use NixPHP\View\Core\View;
 use Tests\NixPHPTestCase;
 
 class ViewTest extends NixPHPTestCase
@@ -55,7 +55,7 @@ class ViewTest extends NixPHPTestCase
 
     public function testHelperFunction()
     {
-        $this->assertIsString(\NixPHP\view('test'));
+        $this->assertIsString(\NixPHP\View\view('test'));
     }
 
 }

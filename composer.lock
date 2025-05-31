@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "78b074491b78e5246fece37a6e1a3d6e",
+    "content-hash": "f372fd5d5304906a05e56e2ecc7dd21e",
     "packages": [
         {
             "name": "nixphp/framework",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nixphp/framework.git",
-                "reference": "a26cb657b5b994c659216b23dff4a255b23ed382"
+                "reference": "ee9dea43ce3106f2981cf514ee16baf10f217169"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nixphp/framework/zipball/a26cb657b5b994c659216b23dff4a255b23ed382",
-                "reference": "a26cb657b5b994c659216b23dff4a255b23ed382",
+                "url": "https://api.github.com/repos/nixphp/framework/zipball/ee9dea43ce3106f2981cf514ee16baf10f217169",
+                "reference": "ee9dea43ce3106f2981cf514ee16baf10f217169",
                 "shasum": ""
             },
             "require": {
@@ -62,7 +62,7 @@
                 "issues": "https://github.com/nixphp/framework/issues",
                 "source": "https://github.com/nixphp/framework/tree/main"
             },
-            "time": "2025-05-31T12:59:15+00:00"
+            "time": "2025-05-31T21:07:22+00:00"
         },
         {
             "name": "nyholm/psr7",
@@ -2084,8 +2084,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=8.3",
-        "ext-pdo": "*"
+        "php": ">=8.3"
     },
     "platform-dev": {},
     "plugin-api-version": "2.6.0"
