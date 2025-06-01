@@ -42,16 +42,19 @@ class Asset
         return array_unique($this->assets[$type] ?? []);
     }
 
-    public function render(string $type, string $mode = 'classic'): string
+    public function render(string $type): string
     {
         $html = '';
 
-        foreach ($this->list($type, $mode) as $path) {
-            if ($type === 'css') {
+        if ($type === 'css') {
+            foreach ($this->list('css') as $path) {
                 $html .= sprintf(self::TAG_CSS, s($path)) . PHP_EOL;
-            } elseif ($type === 'js' && $mode === 'classic') {
+            }
+        } elseif ($type === 'js') {
+            foreach ($this->list('js', 'classic') as $path) {
                 $html .= sprintf(self::TAG_JS, s($path)) . PHP_EOL;
-            } elseif ($type === 'js' && $mode === 'module') {
+            }
+            foreach ($this->list('js', 'module') as $path) {
                 $html .= sprintf(self::TAG_JS_MODULE, s($path)) . PHP_EOL;
             }
         }
