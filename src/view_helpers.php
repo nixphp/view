@@ -16,7 +16,7 @@ function s(string|array $value): string|array
 
 function render(string $template, array $vars = []): ResponseInterface
 {
-    return response(\NixPHP\View\view($template, $vars));
+    return response(view($template, $vars));
 }
 
 function view(string $template, array $vars = []): string

@@ -1,4 +1,4 @@
-<div style="text-align: center;">
+<div align="center" style="text-align: center;">
 
 ![Logo](https://nixphp.github.io/docs/assets/nixphp-logo-small-square.png)
 
