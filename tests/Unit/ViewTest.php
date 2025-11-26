@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit;
 
 use NixPHP\View\Core\View;
 use Tests\NixPHPTestCase;
+use function NixPHP\guard;
+use function NixPHP\View\view;
 
 class ViewTest extends NixPHPTestCase
 {
@@ -49,13 +53,15 @@ class ViewTest extends NixPHPTestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $view = new View();
+        guard()->register('safePath', fn($path) => throw new \InvalidArgumentException('test'));
         $view->setTemplate('../../../../etc/passwd');
         $view->render();
     }
 
     public function testHelperFunction()
     {
-        $this->assertIsString(\NixPHP\View\view('test'));
+        guard()->register('safePath', fn($path) => $path);
+        $this->assertIsString(view('test'));
     }
 
 }
