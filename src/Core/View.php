@@ -64,7 +64,7 @@ class View
     {
         if (!isset($this->variables[$name])) {
             ob_end_clean();
-            throw new \Exception("Variable $name does not exist");
+            throw new \Exception("Block $name was not opened. ");
         }
         $this->variables[$name] = ob_get_clean();
     }
@@ -80,16 +80,16 @@ class View
 
         $paths = [
             app()->getBasePath() . '/app/views', // App views
-            ...array_filter(array_map('realpath', plugin()->getFromAll('viewPaths'))), // Plugin views
+            ...array_filter(array_map('realpath', app()->collectPluginResources('viewPaths'))), // Plugin views
             __DIR__ . '/../Resources/views', // Framework views
         ];
 
         foreach ($paths as $path) {
-            $fullPath = rtrim($path, '/') . '/' . str_replace('.', '/', $templateName) . '.phtml';
+            $fullPath = sprintf('%s/%s.phtml', rtrim($path, '/'), str_replace('.', '/', $templateName));
             if (is_file($fullPath)) return $fullPath;
         }
 
-        throw new \RuntimeException("View [$templateName] not found in any known paths.");
+        throw new \RuntimeException("View $templateName not found in any known paths.");
     }
 
 }
