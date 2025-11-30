@@ -78,7 +78,7 @@ class View
 
         $paths = [
             app()->getBasePath() . '/app/views', // App views
-            ...array_filter(array_map('realpath', plugin()->getMeta('viewPaths'))), // Plugin views
+            ...array_filter(array_map('realpath', app()->collectPluginResources('viewPaths'))), // Plugin views
             __DIR__ . '/../Resources/views', // Framework views
         ];
 
