@@ -38,7 +38,7 @@ It lets you define base layouts, use content blocks, and safely output user data
 composer require nixphp/view
 ```
 
-The plugin auto-registers itself and adds the `view()`, `render()` and `s()` helpers globally.
+The plugin auto-registers itself and adds the `view()`, `render()`, `assets()` and `s()` helpers globally.
 
 ---
 
@@ -61,6 +61,19 @@ return render('hello', ['name' => 'World']);
 ```
 
 This renders the view **and wraps it in a proper response**, ready to be returned from any route handler.
+
+To load a template file in another folder, you can use the dot notation:
+```php
+return render('pages.hello', ['name' => 'World']);
+```
+
+Or even multiple levels:
+
+```php
+return render('pages.elements.hello', ['name' => 'World']);
+```
+
+This works for both `view()` and `render()`.
 
 ---
 
@@ -104,12 +117,70 @@ Use the `s()` helper to sanitize output (HTML-escaped):
 
 ---
 
+## 🎨 Asset Management (CSS & JS)
+
+The plugin includes a small, flexible asset collector used inside layouts to include CSS and JavaScript files.
+
+Assets are added inside views or controllers using the `assets()` helper:
+
+```php
+assets()->add('/assets/style.css');            // CSS
+assets()->add('/assets/app.js');               // JavaScript (classic)
+assets()->add('/assets/main.js', 'module');    // JavaScript ES module
+```
+
+### Output in layout files
+
+Use `assets()->render('css')` or `assets()->render('js')` inside your layout:
+
+```php
+<!doctype html>
+<html>
+<head>
+    <?= assets()->render('css') ?>
+</head>
+<body>
+    <?= $this->renderBlock('content') ?>
+    <?= assets()->render('js') ?>
+</body>
+</html>
+```
+
+### What gets generated?
+
+**CSS:**
+
+```html
+<link rel="stylesheet" href="/assets/style.css">
+```
+
+**Classic JS:**
+
+```html
+<script src="/assets/app.js"></script>
+```
+
+**Module JS:**
+
+```html
+<script type="module" src="/assets/main.js"></script>
+```
+
+### Internals
+
+**All paths are automatically HTML-escaped via `s()`.**
+
+---
+
+
 ## 🔁 Helper Comparison
 
 | Helper     | Returns             | Use case                                |
 | ---------- | ------------------- | --------------------------------------- |
+| `render()` | `ResponseInterface` | Ideal for controller return values   |
 | `view()`   | `string`            | For manual output or further processing |
-| `render()` | `ResponseInterface` | Ideal for controller return values      |
+| `assets()` | `string`            | Include CSS & JS files in layouts       |
+| `s()`      | `string`            | Escape output                           |
 
 ---
 
