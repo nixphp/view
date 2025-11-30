@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NixPHP\View\Core;
 
 use function NixPHP\View\s;
@@ -18,6 +20,12 @@ class Asset
         ],
     ];
 
+    /**
+     * @param string $path
+     * @param string $mode
+     *
+     * @return void
+     */
     public function add(string $path, string $mode = 'classic'): void
     {
         $ext = pathinfo($path, PATHINFO_EXTENSION);
@@ -33,6 +41,12 @@ class Asset
         }
     }
 
+    /**
+     * @param string $type
+     * @param string $mode
+     *
+     * @return array
+     */
     public function list(string $type, string $mode = 'classic'): array
     {
         if ($type === 'js') {
@@ -42,6 +56,11 @@ class Asset
         return array_unique($this->assets[$type] ?? []);
     }
 
+    /**
+     * @param string $type
+     *
+     * @return string
+     */
     public function render(string $type): string
     {
         $html = '';
