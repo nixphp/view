@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
+use NixPHP\Core\Config;
 use NixPHP\View\Core\View;
 use Tests\NixPHPTestCase;
+use function NixPHP\app;
 use function NixPHP\guard;
 use function NixPHP\View\view;
 
@@ -41,6 +43,39 @@ class ViewTest extends NixPHPTestCase
         $this->assertSame('layout,content', trim($view->render()));
     }
 
+    public function testRespectsRelativeConfiguredViewPaths()
+    {
+        $this->withViewConfig([
+            'view' => [
+                'paths' => [
+                    'overrides',
+                    'views',
+                ],
+            ],
+        ], function () {
+            $view = new View();
+            $view->setTemplate('test_relative');
+            $this->assertSame('relative view', trim($view->render()));
+        });
+    }
+
+    public function testLoadsViewsFromAbsoluteConfiguredPaths()
+    {
+        $absolutePath = BASE_PATH . '/absolute_views';
+
+        $this->withViewConfig([
+            'view' => [
+                'paths' => [
+                    $absolutePath,
+                ],
+            ],
+        ], function () {
+            $view = new View();
+            $view->setTemplate('test_absolute');
+            $this->assertSame('absolute view', trim($view->render()));
+        });
+    }
+
     public function testMissingOpenedBlockInView()
     {
         $this->expectException(\Exception::class);
@@ -62,6 +97,22 @@ class ViewTest extends NixPHPTestCase
     {
         guard()->register('safePath', fn($path) => $path);
         $this->assertIsString(view('test'));
+    }
+
+    private function withViewConfig(array $settings, callable $callback): void
+    {
+        $container = app()->container();
+        $originalConfig = $container->get(Config::class);
+
+        $container->reset(Config::class);
+        $container->set(Config::class, new Config($settings));
+
+        try {
+            $callback();
+        } finally {
+            $container->reset(Config::class);
+            $container->set(Config::class, $originalConfig);
+        }
     }
 
 }
