@@ -81,7 +81,7 @@ This works for both `view()` and `render()`.
 
 Use `setLayout()` to define a parent layout, and `block()/endblock()` to inject content:
 
-#### `app/views/page.phtml`
+#### `views/page.phtml`
 
 ```php
 <?php $this->setLayout('layout') ?>
@@ -91,7 +91,7 @@ Use `setLayout()` to define a parent layout, and `block()/endblock()` to inject 
 <?php $this->endblock('content') ?>
 ```
 
-#### `app/views/layout.phtml`
+#### `views/layout.phtml`
 
 ```php
 <!doctype html>
@@ -186,9 +186,26 @@ Use `assets()->render('css')` or `assets()->render('js')` inside your layout:
 
 ## 🔍 Internals
 
-* `view()` resolves and loads `.phtml` templates from `/app/views/` or any registered view path.
+* `view()` resolves and loads `.phtml` templates from the directories listed in `view:paths` (defaults to `views/` first with `app/views/` as a fallback) before checking any registered plugin or framework views.
 * `setLayout()` nests the rendered content into a wrapper view.
 * Blocks are buffered and stored internally until rendered.
+
+### ⚙️ Configurable view locations
+
+Set the `view:paths` configuration to control where templates are resolved inside your application. This plugin ships with `src/config.php`, which defaults to:
+
+```php
+return [
+    'view' => [
+        'paths' => [
+            'views',
+            'app/views',
+        ],
+    ],
+];
+```
+
+The entries are resolved relative to `BASE_PATH` when they are not absolute paths, so you can place templates anywhere and order them however you need. The plugin checks each directory in order before falling back to registered plugin or framework view paths.
 
 ---
 
